@@ -2,13 +2,11 @@
 Description=DNS Proxy Service
 Documentation=https://github.com/9bingyin/Fast-DoH
 After=network.target
-Wants=
-Requires=
 
 [Service]
-ExecStart=/usr/bin/dnsproxy -l 127.0.0.1 -p 53 -u https://223.5.5.5/dns-query -u https://223.6.6.6/dns-query
-ExecStop=
-ExecReload=/usr/bin/dnsproxy -l 127.0.0.1 -p 53 -u https://223.5.5.5/dns-query -u https://223.6.6.6/dns-query
+ExecStartPre=/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=0
+ExecStart=/usr/bin/dnsproxy -l 127.0.0.1 -p 53 -u https://223.5.5.5/dns-query -u https://223.6.6.6/dns-query -6
+ExecReload=/usr/bin/dnsproxy -l 127.0.0.1 -p 53 -u https://223.5.5.5/dns-query -u https://223.6.6.6/dns-query -6
 Type=simple
 
 [Install]
